@@ -2,12 +2,16 @@
 body {
 	margin: 0;
 	padding: 0;
+	font-size: 11pt;
+}
+* {
+	font-family: normal normal 11pt 'Trebuchet MS', Trebuchet, Verdana, sans-serif;
 }
 .cbusca_widget {
 	position: relative;
 	width: 226px;
 	height: 226px;
-	background: lightgray;
+	background-image: linear-gradient(to bottom,#b3ccff,#003399);
 	font-family: arial;
 }
 #cquery {
@@ -16,9 +20,11 @@ body {
 	left: 3px;
 	bottom: 3px;
 	width: 220px;
-	height: 30px;
+	height: 28px;
 	font-size: 11pt;
 	text-align: right;
+	background: lightgray;
+	outline: none;
 }
 .cbody {
 	background: white;
@@ -32,7 +38,6 @@ body {
 .ccontato {
 	padding-bottom: 3px;
 	padding-top: 3px;
-	font-size: 11pt;
 	text-align: center;
 	cursor: pointer;
 	margin-bottom: 3px;
@@ -101,7 +106,6 @@ function procurar(q) {
 			titulo.setAttribute("class", "ctitulo");
 			titulo.innerHTML = contatos[i].titulo;
 			contato.appendChild(titulo);
-			console.log(contatos[i].telefones);
 			var telefones = contatos[i].telefones.split(",");
 			for (var j = 0; j < telefones.length; j++) {
 				var telefone = document.createElement("div");
