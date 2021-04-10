@@ -42,7 +42,7 @@ body {
 	text-align: left;
 	margin-bottom: 3px;
 }
-.cwhatsapp {
+.ctelefone {
 	text-align: right;
 }
 #clogo {
@@ -52,7 +52,7 @@ body {
 }
 .button_menu {
 	position: absolute;
-	top: 3px;
+	top: 8px;
 	right: 3px;
 	cursor: pointer;
 }
@@ -101,12 +101,13 @@ function procurar(q) {
 			titulo.setAttribute("class", "ctitulo");
 			titulo.innerHTML = contatos[i].titulo;
 			contato.appendChild(titulo);
-			var whatsapps = contatos[i].whatsapp.split(",");
-			for (var j = 0; j < whatsapps.length; j++) {
-				var whatsapp = document.createElement("div");
-				whatsapp.setAttribute("class", "cwhatsapp");
-				whatsapp.innerHTML = whatsapps[j];
-				contato.appendChild(whatsapp);
+			console.log(contatos[i].telefones);
+			var telefones = contatos[i].telefones.split(",");
+			for (var j = 0; j < telefones.length; j++) {
+				var telefone = document.createElement("div");
+				telefone.setAttribute("class", "ctelefone");
+				telefone.innerHTML = telefones[j].replace("w", "<img src=\"./img/whatsapp.png\" width=\"10\" height=\"10\"/> ");
+				contato.appendChild(telefone);
 			}
 			resultados.appendChild(contato);
 		}
