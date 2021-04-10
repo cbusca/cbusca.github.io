@@ -1,0 +1,112 @@
+<style>
+.cbusca_widget {
+	position: absolute;
+	width: 226px;
+	height: 226px;
+	background: lightgray;
+	font-family: arial;
+}
+#cquery {
+	position: absolute;
+	left: 3px;
+	bottom: 3px;
+	width: 220px;
+	height: 30px;
+	font-size: 11pt;
+	text-align: right;
+}
+.cbody {
+	background: white;
+	position: absolute;
+	left: 3px;
+	top: 40px;
+	width: 220px;
+	height: 150px;
+	overflow: auto;
+}
+.ccontato {
+	padding-bottom: 3px;
+	padding-top: 3px;
+	font-size: 11pt;
+	text-align: center;
+	cursor: pointer;
+	margin-bottom: 3px;
+	border-bottom: solid 1x gray;
+}
+.ctitulo {
+	text-align: left;
+	margin-bottom: 3px;
+}
+.cwhatsapp {
+	text-align: right;
+}
+#clogo {
+	position: absolute;
+	top: 3px;
+	left: 46px;
+}
+.button_menu {
+	position: absolute;
+	top: 3px;
+	right: 3px;
+	cursor: pointer;
+}
+.cinfo {
+	background: black;
+}
+</style>
+<meta charset="utf-8"/>
+<div class="cbusca_widget">
+	<img src="http://cbusca.github.io/img/cbusca.png" width="133" height="34" id="clogo"/>
+	<button class="button_menu" onClick="mostrarInfo()">☰</button>
+	<input type="text" id="cquery" onKeyUp="procurar(this.value)" placeholder="Pesquisar..."/>
+	<div class="cbody" id="cresultados"></div>
+	<div class="cbusca_widget" id="cinfo" style="display: none">
+		<img src="http://cbusca.github.io/img/cbusca.png" width="133" height="34" id="clogo"/>
+		<button class="button_menu" onClick="fecharInfo()">x</button>
+		<div class="cbody" style="text-align: center">
+			<p><b>Cbusca Lista Telefônica</b></p>
+			<p>
+				Mais Informações:<br>
+				(88) 9 9456 2458<br><br>
+				<small>Milton Rodrigues<br>iomltn@gmail.com</small>
+			</p>
+		</div>
+	</div>
+</div>
+<script src="http://cbusca.github.io/js/contatos.js"></script>
+<script>
+var resultados = document.getElementById("cresultados");
+function mostrarInfo() {
+	document.getElementById("cinfo").style.display = '';
+}
+function fecharInfo() {
+	document.getElementById("cinfo").style.display = 'none';
+}
+function whatsapp(numero) {
+	
+}
+function procurar(q) {
+	resultados.innerHTML = "";
+	for (var i = 0; i < contatos.length; i++) {
+		if (contatos[i].titulo.toUpperCase().indexOf(q.toUpperCase()) != -1 || contatos[i].descricao.toUpperCase().indexOf(q.toUpperCase()) != -1) {
+			var contato = document.createElement("div");
+			contato.setAttribute("class", "ccontato");
+			var titulo = document.createElement("div");
+			titulo.setAttribute("class", "ctitulo");
+			titulo.innerHTML = contatos[i].titulo;
+			contato.appendChild(titulo);
+			var whatsapps = contatos[i].whatsapp.split(",");
+			for (var j = 0; j < whatsapps.length; j++) {
+				var whatsapp = document.createElement("div");
+				whatsapp.setAttribute("class", "cwhatsapp");
+				whatsapp.innerHTML = whatsapps[j];
+				contato.appendChild(whatsapp);
+			}
+			resultados.appendChild(contato);
+		}
+	}
+}
+procurar('');
+</script>
+
