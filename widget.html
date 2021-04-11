@@ -39,7 +39,6 @@ body {
 	padding-bottom: 3px;
 	padding-top: 3px;
 	text-align: center;
-	cursor: pointer;
 	margin-bottom: 3px;
 	border-bottom: solid 1x gray;
 }
@@ -49,6 +48,11 @@ body {
 }
 .ctelefone {
 	text-align: right;
+}
+.cwhatsapp {
+	cursor: pointer;
+	color: darkgreen;
+	font-weight: bold;
 }
 #clogo {
 	position: absolute;
@@ -79,7 +83,7 @@ body {
 			<p><b>Cbusca Lista Telefônica</b></p>
 			<p>
 				Contato:<br>
-				<img src="https://cbusca.github.io//img/whatsapp.png" width="10" height="10"/> (88) 9 9456 2458<br><br>
+				<img src="https://cbusca.github.io//img/whatsapp.png" width="10" height="10"/> <span onClick="whatsapp(88994562458)" style="cursor: pointer">(88) 9 9456 2458</span><br><br>
 				<small>Milton Rodrigues<br>iomltn@gmail.com</small>
 			</p>
 		</div>
@@ -87,6 +91,7 @@ body {
 </div>
 <script src="https://cbusca.github.io/js/contatos.js"></script>
 <script>
+var pw = /w(.*)/
 var resultados = document.getElementById("cresultados");
 function mostrarInfo() {
 	document.getElementById("cinfo").style.display = '';
@@ -95,7 +100,11 @@ function fecharInfo() {
 	document.getElementById("cinfo").style.display = 'none';
 }
 function whatsapp(numero) {
-	
+	var link = "https://api.whatsapp.com/send?phone=55" + numero;
+	var a = document.createElement("a");
+	a.setAttribute("href", link);
+	a.setAttribute("target", "_blank");
+	a.click();
 }
 function procurar(q) {
 	resultados.innerHTML = "";
@@ -112,6 +121,12 @@ function procurar(q) {
 				var telefone = document.createElement("div");
 				telefone.setAttribute("class", "ctelefone");
 				telefone.innerHTML = telefones[j].replace("w", "<img src=\"https://cbusca.github.io//img/whatsapp.png\" width=\"10\" height=\"10\"/> ");
+				if (telefones[j].match(pw)) {
+					telefone.setAttribute("class", "ctelefone cwhatsapp");
+					var temp = telefones[j].replace("w", "");
+					temp = temp.replaceAll(" ", "");
+					telefone.setAttribute("onClick", "whatsapp('" + temp + "')");
+				}
 				contato.appendChild(telefone);
 			}
 			resultados.appendChild(contato);
