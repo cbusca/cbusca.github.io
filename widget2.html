@@ -1,0 +1,139 @@
+<style>
+body {
+	margin: 0;
+	padding: 0;
+	font-size: 11pt;
+}
+* {
+	font-family: normal normal 11pt 'Trebuchet MS', Trebuchet, Verdana, sans-serif;
+}
+.cbusca_widget {
+	position: relative;
+	width: 200px;
+	height: 226px;
+	background-image: linear-gradient(to bottom,lightgray,gray);
+	font-family: arial;
+}
+#cquery {
+	display: block;
+	position: absolute;
+	left: 3px;
+	bottom: 3px;
+	width: 194px;
+	height: 29px;
+	font-size: 11pt;
+	text-align: right;
+	background: lightgray;
+	outline: none;
+}
+.cbody {
+	background: white;
+	position: absolute;
+	left: 3px;
+	top: 40px;
+	width: 194px;
+	height: 150px;
+	overflow: auto;
+}
+.ccontato {
+	padding-bottom: 3px;
+	padding-top: 3px;
+	text-align: center;
+	margin-bottom: 3px;
+	border-bottom: solid 1x gray;
+}
+.ctitulo {
+	text-align: left;
+	margin-bottom: 3px;
+}
+.ctelefone {
+	text-align: right;
+}
+.cwhatsapp {
+	cursor: pointer;
+	color: darkgreen;
+	font-weight: bold;
+}
+#clogo {
+	position: absolute;
+	top: 3px;
+	left: 50%;
+	margin-left: -65px;
+}
+.button_menu {
+	position: absolute;
+	top: 8px;
+	right: 3px;
+	cursor: pointer;
+}
+.cinfo {
+	background: black;
+}
+</style>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<div class="cbusca_widget">
+	<img src="https://cbusca.github.io/img/cbusca.png" width="129" height="33" id="clogo"/>
+	<img src="https://cbusca.github.io//img/sobre.png" width="24" height="24" class="button_menu" onClick="mostrarInfo()"/>
+	<input type="text" id="cquery" onKeyUp="procurar(this.value)" placeholder="Pesquisar..."/>
+	<div class="cbody" id="cresultados"></div>
+	<div class="cbusca_widget" id="cinfo" style="display: none">
+		<img src="https://cbusca.github.io/img/cbusca.png" width="129" height="33" id="clogo"/>
+		<img src="https://cbusca.github.io//img/fechar.png" width="24" height="24" class="button_menu" onClick="fecharInfo()"/>
+		<div class="cbody" style="text-align: center">
+			<p><b>Cbusca Lista Telefônica</b></p>
+			<p>
+				Contato:<br>
+				<img src="https://cbusca.github.io//img/whatsapp.png" width="10" height="10"/> <span onClick="whatsapp(88994562458)" style="cursor: pointer">(88) 9 9456 2458</span><br><br>
+				<small>Milton Rodrigues<br>iomltn@gmail.com</small>
+			</p>
+		</div>
+	</div>
+</div>
+<script src="https://cbusca.github.io/js/contatos.js"></script>
+<script>
+var pw = /w(.*)/
+var resultados = document.getElementById("cresultados");
+function mostrarInfo() {
+	document.getElementById("cinfo").style.display = '';
+}
+function fecharInfo() {
+	document.getElementById("cinfo").style.display = 'none';
+}
+function whatsapp(numero) {
+	var link = "https://api.whatsapp.com/send?phone=55" + numero;
+	var a = document.createElement("a");
+	a.setAttribute("href", link);
+	a.setAttribute("target", "_blank");
+	a.click();
+}
+function procurar(q) {
+	resultados.innerHTML = "";
+	for (var i = 0; i < contatos.length; i++) {
+		if (contatos[i].titulo.toUpperCase().indexOf(q.toUpperCase()) != -1 || contatos[i].descricao.toUpperCase().indexOf(q.toUpperCase()) != -1) {
+			var contato = document.createElement("div");
+			contato.setAttribute("class", "ccontato");
+			var titulo = document.createElement("div");
+			titulo.setAttribute("class", "ctitulo");
+			titulo.innerHTML = contatos[i].titulo;
+			contato.appendChild(titulo);
+			var telefones = contatos[i].telefones.split(",");
+			for (var j = 0; j < telefones.length; j++) {
+				var telefone = document.createElement("div");
+				telefone.setAttribute("class", "ctelefone");
+				telefone.innerHTML = telefones[j].replace("w", "<img src=\"https://cbusca.github.io//img/whatsapp.png\" width=\"10\" height=\"10\"/> ");
+				if (telefones[j].match(pw)) {
+					telefone.setAttribute("class", "ctelefone cwhatsapp");
+					var temp = telefones[j].replace("w", "");
+					temp = temp.replaceAll(" ", "");
+					telefone.setAttribute("onClick", "whatsapp('" + temp + "')");
+				}
+				contato.appendChild(telefone);
+			}
+			resultados.appendChild(contato);
+		}
+	}
+}
+procurar('');
+</script>
+
